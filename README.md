@@ -75,12 +75,12 @@ Scans on every PR. Blocks merge if CRITICAL issues found. Auto-comments results.
 | m | Export Markdown report |
 | q / Esc | Quit |
 
-## AI Integration
+## AI Integration (opt-in)
 
-Built-in AI analysis using MoMo free API (no account required):
+AI analysis is **disabled by default** — no data leaves your machine unless you opt in.
 
 ```bash
-auto-scanner onboard  # configures AI (default: MiMo free)
+auto-scanner onboard  # configure your own API endpoint
 ```
 
 Press `a` in the TUI for AI executive summary, or run:
@@ -89,7 +89,7 @@ Press `a` in the TUI for AI executive summary, or run:
 auto-scanner analyze ./some-skill/
 ```
 
-Compatible with any OpenAI-compatible API endpoint.
+**Recommended**: [Ollama](https://ollama.com) for zero data leakage — `http://localhost:11434/v1`. Compatible with any OpenAI-compatible API endpoint.
 
 ## Architecture
 
