@@ -1,7 +1,7 @@
 {
   "name": "auto-skills-scanner",
-  "version": "0.1.0",
-  "description": "AUTO Skills Scanner — Agent Skills supply chain security scanner (VirusTotal for Agent Skills)",
+  "version": "0.1.2",
+  "description": "Scan any AI Agent Skill or MCP server for malware before you install it — the VirusTotal for the Agent ecosystem. Zero deps, 65kB, 8 threat categories.",
   "main": "dist/cli.js",
   "bin": {
     "auto-scanner": "dist/cli.js"

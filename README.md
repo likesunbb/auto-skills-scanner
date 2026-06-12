@@ -3,11 +3,13 @@
 [![npm version](https://img.shields.io/npm/v/auto-skills-scanner)](https://www.npmjs.com/package/auto-skills-scanner)
 [![npm downloads](https://img.shields.io/npm/dm/auto-skills-scanner)](https://www.npmjs.com/package/auto-skills-scanner)
 [![license](https://img.shields.io/npm/l/auto-skills-scanner)](LICENSE)
-[![AUTO Scan](https://img.shields.io/badge/AUTO%20Scan-passing-green)](https://github.com/auto-skills-scanner)
+[![AUTO Scan](https://img.shields.io/badge/AUTO%20Scan-passing-green)](https://github.com/likesunbb/auto-skills-scanner)
 
-**VirusTotal for Agent Skills** — pre-installation supply chain security scanner.
+> **Don't install a stranger's AI Skill without scanning it first.**
 
-Scan any Agent Skill or MCP server for security threats BEFORE installing. 8 detection categories, 18+ patterns, CVE mapping, zero runtime dependencies.
+The Agent ecosystem is the new npm — and like npm in 2016, there's no security. Anyone can publish a Skill that reads your files, steals your API keys, or runs malicious code. AUTO Scanner is the **VirusTotal for Agent Skills** — scan BEFORE you install.
+
+65kB. Zero dependencies. 8 threat categories. CVE-mapped. AI-powered analysis. 10 minutes from `npm install -g` to your first scan.
 
 ## Quick Start
 
