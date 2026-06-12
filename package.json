@@ -1,6 +1,6 @@
 {
   "name": "auto-skills-scanner",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Scan any AI Agent Skill or MCP server for malware before you install it — the VirusTotal for the Agent ecosystem. Zero deps, 65kB, 8 threat categories.",
   "main": "dist/cli.js",
   "bin": {

@@ -155,3 +155,14 @@ export interface ScannedFile {
   /** File size in bytes */
   size: number;
 }
+
+/** Scan options for configuring behavior */
+export interface ScanOptions {
+  /** Glob patterns to exclude from scanning */
+  ignorePaths?: string[];
+  /** Rule IDs to skip entirely */
+  skipRules?: string[];
+  /** Lines in files matching these patterns are ignored (e.g. ['auto-scanner:ignore']) */
+  ignoreLinePatterns?: RegExp[];
+}
+

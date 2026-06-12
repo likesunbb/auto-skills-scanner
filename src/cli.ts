@@ -10,7 +10,7 @@ import * as os from 'os';
 import * as readline from 'readline';
 import { ansi, color } from './ansi';
 
-const VERSION = '0.1.0';
+const VERSION = '0.2.0';
 
 const CSI = '\x1b[';
 const cursorHide = CSI + '?25l';
