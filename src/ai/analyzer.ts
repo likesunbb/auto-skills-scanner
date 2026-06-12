@@ -1,5 +1,7 @@
 // AI Analyzer — OpenAI-compatible API client for LLM-assisted scanning
-// Default: MiMo free tier (https://api.xiaomimimo.com/api/free-ai/openai)
+// SECURITY: AI is DISABLED by default. User must explicitly configure an API.
+// Note: MiMo free API (api.xiaomimimo.com) is no longer functional as of 2026-06-12.
+// Use your own API key or a local model (Ollama recommended: http://localhost:11434/v1)
 import * as https from 'https';
 import * as http from 'http';
 import { Finding, ScanResult } from '../types';
@@ -12,10 +14,10 @@ export interface AiConfig {
 }
 
 export const DEFAULT_AI_CONFIG: AiConfig = {
-  baseUrl: 'https://api.xiaomimimo.com/api/free-ai/openai',
-  apiKey: 'anonymous',
-  model: 'mimo-auto',
-  enabled: true,
+  baseUrl: '',
+  apiKey: '',
+  model: 'ollama',
+  enabled: false,
 };
 
 interface ChatMessage {

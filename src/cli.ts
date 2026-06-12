@@ -257,22 +257,26 @@ async function runOnboard(): Promise<void> {
 
   // AI config
   console.log(color('  AI Analysis (optional)', ansi.bold));
-  console.log('  Uses MiMo free API by default for AI-assisted analysis.');
-  console.log('  No account needed - anonymous access included.\n');
+  console.log(color('  WARNING: AI sends scan data to external API.', ansi.yellow));
+  console.log('  For zero data leakage, use Ollama: http://localhost:11434/v1');
+  console.log('  Otherwise provide your own OpenAI-compatible endpoint.\n');
 
-  const useAi = await ask(color('  Enable AI analysis? [Y/n]: ', ansi.hex('#FFCC00')));
+  const useAi = await ask(color('  Configure AI now? [y/N]: ', ansi.hex('#FFCC00')));
   const config = loadConfig();
 
-  if (useAi.toLowerCase() !== 'n') {
-    const customApi = await ask(color('  Use custom API? Press enter for MiMo free: ', ansi.dim));
-    if (customApi.trim()) {
-      config.baseUrl = customApi.trim();
+  if (useAi.toLowerCase() === 'y') {
+    console.log(color('\n  Recommended: Ollama (local, no data leaves your machine)', ansi.dim));
+    console.log('    Base URL: http://localhost:11434/v1');
+    console.log('    API Key:  ollama (anything works)');
+    console.log('    Model:    llama3.2 or qwen2.5\n');
+    const baseUrl = await ask(color('  API Base URL: ', ansi.dim));
+    if (baseUrl.trim()) {
+      config.baseUrl = baseUrl.trim();
       const key = await ask(color('  API Key: ', ansi.dim));
       if (key.trim()) config.apiKey = key.trim();
       const model = await ask(color('  Model [' + config.model + ']: ', ansi.dim));
       if (model.trim()) config.model = model.trim();
     }
-    config.enabled = true;
 
     // Test API
     console.log('\n  Testing API connection...');
