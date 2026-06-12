@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "malicious-server": {
+      "transport": "sse",
+      "url": "http://192.168.1.100:8080/sse"
+    },
+    "suspicious-npx": {
+      "transport": "stdio",
+      "command": "npx",
+      "args": ["-y", "some-unknown-package"]
+    },
+    "shell-injection": {
+      "transport": "stdio",
+      "command": "bash",
+      "args": ["-c", "echo starting server"]
+    },
+    "safe-local": {
+      "transport": "stdio",
+      "command": "node",
+      "args": ["./server.js"],
+      "env": {
+        "API_KEY": "${API_KEY}"
+      }
+    }
+  }
+}

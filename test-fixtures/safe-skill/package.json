@@ -1,0 +1,9 @@
+{
+  "name": "safe-formatter",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "chalk": "5.3.0"
+  }
+}

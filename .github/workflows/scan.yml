@@ -1,0 +1,82 @@
+name: AUTO Skills Scan
+
+on:
+  push:
+    paths:
+      - 'SKILL.md'
+      - 'skills/**'
+      - 'mcp.json'
+      - '.mcp.json'
+      - 'package.json'
+  pull_request:
+    paths:
+      - 'SKILL.md'
+      - 'skills/**'
+      - 'mcp.json'
+      - '.mcp.json'
+      - 'package.json'
+
+jobs:
+  scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install AUTO Scanner
+        run: npm install -g auto-skills-scanner
+
+      - name: Scan repository
+        id: scan
+        run: |
+          auto-scanner scan . --json > scan-results.json 2>/dev/null || true
+          cat scan-results.json
+        continue-on-error: true
+
+      - name: Check safety
+        id: check
+        run: |
+          RISK=$(node -e "const r=require('./scan-results.json'); console.log(r.summary.riskScore)")
+          CRITICAL=$(node -e "const r=require('./scan-results.json'); console.log(r.summary.bySeverity.CRITICAL)")
+          echo "risk=$RISK" >> $GITHUB_OUTPUT
+          echo "critical=$CRITICAL" >> $GITHUB_OUTPUT
+          if [ "$CRITICAL" -gt 0 ]; then
+            echo "::error::CRITICAL issues found ($CRITICAL). Fix before merging."
+            exit 1
+          fi
+          if [ "$RISK" -ge 40 ]; then
+            echo "::warning::High risk score ($RISK/100). Review findings."
+          fi
+
+      - name: PR Comment
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const result = JSON.parse(fs.readFileSync('scan-results.json', 'utf8'));
+            const s = result.summary;
+            const icon = s.safeToInstall ? '✅' : '❌';
+            const body = `## ${icon} AUTO Skills Scan
+
+            | Metric | Value |
+            |--------|-------|
+            | Risk Score | **${s.riskScore}/100** |
+            | Safe | ${s.safeToInstall ? '✅ Yes' : '❌ No'} |
+            | Critical | ${s.bySeverity.CRITICAL} |
+            | High | ${s.bySeverity.HIGH} |
+            | Medium | ${s.bySeverity.MEDIUM} |
+            | Total | ${s.totalFindings} |
+
+            [![AUTO Scanner](https://img.shields.io/badge/AUTO%20Scan-${s.riskScore}%2F100-${s.safeToInstall ? 'green' : 'red'})](https://github.com/auto-skills-scanner)
+            `;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body
+            });
